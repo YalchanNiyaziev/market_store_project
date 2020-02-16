@@ -1,0 +1,107 @@
+How to start the application:
+	In command prompt open the executable/spring_intern2020.jar folder and write the following command: java -jar spring_intern2020.jar
+	Or import the project on Java IDE (IntelliJ, Eclipse, NetBeans, etc.)and run it on
+
+How to use the application:
+	After the application starts, in the console will be displayed mock data about each of the cards.
+
+How does the application work:
+    The app uses the following classes:
+         class Card - abstract class, which stores information about card. The class has the followings:
+             data-members:
+                    private CardOwner  owner - which is instance of class CardOwner and keeps information about him
+                    private BigDecimal turnover - which is from type BigDecimal and it keeps information about turnover
+                    private BigDecimal initialDiscountRate- which is also from type BigDecimal and it stores information about initial discount rate
+
+             constructor:
+                    Card(CardOwner owner, BigDecimal turnover, BigDecimal initialDiscountRate) - the constructor is explicit and
+                    accepts 3 parameter for each of the data-members
+
+             methods:
+                In this class there are 3 accessors(getters). Every one of them is is supposed to return data-member, which they are intended:
+                    public BigDecimal getTurnover()
+                    public BigDecimal getInitialDiscountRate()
+                    public CardOwner getOwner()
+
+                There is an abstract method, which is supposed to be overridden by the classes that extend this one.
+                    public abstract BigDecimal getDiscountRate();
+
+         class CardOwner- this class stores information about card's owner. The class has the followings:
+             data-members:
+                    private String firstName - stores first name of the owner
+                    private String lastName  - stores the owner's last name
+
+             constructor:
+                    public CardOwner(String firstName, String lastName) - the constructor is explicit
+                    and accepts 2 parameter for each of the data-members
+
+             methods:
+                There are 2 getters, which return the value of data-members
+                    public String getFirstName()
+                    public String getLastName()
+
+         class Purchase - it is used to store information about value and the name of the purchase. It has the followings:
+             data-members:
+                    private String name - keeps  the purchase name
+                    private BigDecimal value - stores the value of the purchase
+
+             constructor:
+                    public Purchase(String name, BigDecimal value) - it is explicit and accepts 2 parameter for each data-member
+
+             methods:
+                There are 2 accessors, which return the value of data-members
+                     public String getName()
+                     public BigDecimal getValue()
+
+
+         class BronzeCard - is used to representing bronze card and it extends the abstract class Card. The class has:
+            constructor:
+                public BronzeCard(CardOwner owner, BigDecimal turnover) - it accepts 2 parameter and calls the constructor of class Card.
+
+            method:
+            It overrides the abstract method of class Card
+            @Override
+                public BigDecimal getDiscountRate()
+
+            Using the condition given in the assignment, the method works as it follows:
+                	1. If the turnover is below 100, discount rate is equal to initial discount rate i.e. there isn't a discount rate.
+                	2. If the turnover is between 100 and 300, the discount rate is 0.01 (1%).
+                	3. If the turnover is above 300, the discount rate is 0.025 (2.5%).
+                To compare the turnover, which is from type BigDecimal, is used compareTo() method.
+
+        class SilverCard - it is representing the functionality of silver card and  it extends class Card. It has the followings:
+            constructor:
+                public SilverCard(CardOwner owner, BigDecimal turnover) - it accepts 2 parameter and calls the constructor of class Card.
+
+            methods:
+            It overrides the abstract method of class Card
+            @Override
+                public BigDecimal getDiscountRate()
+
+            Using the condition given in the assignment, the method works as it follows:
+                    	1. If the turnover is above 300, the discount rate is 0.035 (3.5%).
+                    	2. If the turnover is below 300, the discount rate is 0.02 (2%) by default.
+            To compare the turnover, which is from type BigDecimal, is used compareTo() method.
+
+        class GoldCard - it represents gold card. It extends abstract class Card. It has:
+            constructor:
+                 public GoldCard(CardOwner owner, BigDecimal turnover) -  it accepts 2 parameter and calls the constructor of class Card.
+
+            methods:
+            It overrides the abstract method of class Card
+            @Override
+                public BigDecimal getDiscountRate()
+
+            Using the condition given in the assignment, the method works as it follows:
+                        1. If the turnover is below 100 the discount rate is 0.02 (2%).
+                        2. The discount rate grows 1% for each $100 from the turnover, capping at 0.1 (10%).
+
+        class PayDesk - is the entry point of the application with its "main" method. It has more 4 static methods :
+            methods:
+                public static BigDecimal getDiscountRate(Card card) - this method returns the discount rate of card, which is belong to card, sent as parameter
+                public static BigDecimal getDiscount(Card card, Purchase purchase) - this method calculates the discount of the  purchase with card
+                public static BigDecimal getTotalPurchaseValue(Card card, Purchase purchase) - this method returns the final purchase value after the discount
+                public static void showPurchaseInfo(Card card, Purchase purchase) - this method displays all the information about the purchase, the discount and cards using the above methods.
+
+                public static void main(String[] args) - in the main method there are instances of the owners, cards, purchases and "showPurchaseInfo" method is called for each card type.
+ Notes: The reason of using BigDecimal class instead of primitive types like double or float is to achieve greater accuracy.
